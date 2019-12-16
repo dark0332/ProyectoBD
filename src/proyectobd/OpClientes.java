@@ -153,7 +153,12 @@ public class OpClientes extends javax.swing.JFrame {
         btnUpdate.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(66, 66, 66));
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/update.png"))); // NOI18N
-        btnUpdate.setText("Buscar");
+        btnUpdate.setText("Actualizar");
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Agregar.png"))); // NOI18N
         btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -252,7 +257,8 @@ public class OpClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        // TODO add your handling code here:
+        AddUser go = new AddUser();
+        go.setVisible(true);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
@@ -395,6 +401,42 @@ public class OpClientes extends javax.swing.JFrame {
         }
 //------------------------------------------------------------------------------
     }//GEN-LAST:event_btnSearchMouseClicked
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+         try {
+            //Para establecer el modelo al JTable
+            DefaultTableModel modelo = new DefaultTableModel();
+            this.jTClientes.setModel(modelo);
+            //Para conectarnos a nuestra base de datos
+            String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+            // Establecemos los valores de cadena de conexión, usuario y contraseña
+            cn = DriverManager.getConnection(url, "system", "SuprPausa1");
+            //Para ejecutar la consulta
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+            rs = s.executeQuery("SELECT * FROM CLIENTES");
+            //Obteniendo la informacion de las columnas que estan siendo consultadas
+            ResultSetMetaData rsMd = rs.getMetaData();
+            //La cantidad de columnas que tiene la consulta
+            int cantidadColumnas = rsMd.getColumnCount();
+            //Establecer como cabezeras el nombre de las colimnas
+            for (int i = 1; i <= cantidadColumnas; i++) {
+                modelo.addColumn(rsMd.getColumnLabel(i));
+            }
+            //Creando las filas para el JTable
+            while (rs.next()) {
+                Object[] fila = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(fila);
+            }
+            rs.close();
+            cn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnUpdateMouseClicked
 
     /**
      * @param args the command line arguments
