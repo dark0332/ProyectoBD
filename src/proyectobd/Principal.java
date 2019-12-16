@@ -13,7 +13,8 @@ import java.awt.CardLayout;
  */
 public class Principal extends javax.swing.JFrame {
 
-CardLayout cardLayout;
+    CardLayout cardLayout;
+
     public Principal() {
         initComponents();
         cardLayout = (CardLayout) (PnlCards.getLayout());
@@ -289,9 +290,9 @@ CardLayout cardLayout;
     }//GEN-LAST:event_btnOVentasMouseClicked
 
     private void btnOClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOClientesMouseClicked
-//        OpClientes go = new OpClientes();
-//        go.setVisible(true);
-//        this.dispose();
+        OpClientes go = new OpClientes();
+        go.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnOClientesMouseClicked
 
     private void btnOProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOProveedoresMouseClicked
