@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package proyectobd;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,13 +22,17 @@ import javax.swing.ImageIcon;
  */
 public class AddUser extends javax.swing.JFrame {
 
-    static Connection cn;
-    static Statement s;
-    static ResultSet rs;
+//    static Connection cn;
+//    static Statement s;
+//    static ResultSet rs;
+    PreparedStatement ps;
+    ResultSet rs;
+    conexion con = new conexion();
+    Connection cn = con.getConection();
 
     public AddUser() {
         initComponents();
-        
+
     }
 
     /**
@@ -41,8 +46,7 @@ public class AddUser extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        btnAgregarC = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -62,14 +66,12 @@ public class AddUser extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Cliente1.png"))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Agregar.png"))); // NOI18N
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Agregar.png"))); // NOI18N
+        btnAgregarC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                btnAgregarCMouseClicked(evt);
             }
         });
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Cancelar.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(66, 66, 66));
@@ -112,11 +114,6 @@ public class AddUser extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(121, 121, 121))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -143,7 +140,10 @@ public class AddUser extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(82, 82, 82)
                                 .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(42, 42, 42))))
+                        .addGap(42, 42, 42))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAgregarC)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,9 +175,7 @@ public class AddUser extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addComponent(btnAgregarC)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -199,40 +197,32 @@ public class AddUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfIDActionPerformed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        String id = txfID.getText();
-        String nombre = txfName.getText();
-        String ap1 = txfApellido1.getText();
-        String ap2 = txfApellido2.getText();
-        String fe = txfFechaN.getText();
-        String sex = txfSexo.getText();
-        
-        ImageIcon icono =new ImageIcon ("src/imagenes/Ok.png");
-        
+    private void btnAgregarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCMouseClicked
+        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
+        String insertar = " INSERT INTO CLIENTES VALUES(?,?,?,?,?,?) ";
+        int Resultado;
         try {
-            //Para establecer el modelo al JTable
-            //Para conectarnos a nuestra base de datos
-            String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-            // Establecemos los valores de cadena de conexión, usuario y contraseña
-            cn = DriverManager.getConnection(url, "system", "SuprPausa1");
-
-            String insertar = " INSERT INTO CLIENTES VALUES(?,?,?,?,?,?) ";
-            PreparedStatement psta = cn.prepareStatement(insertar);
-            psta.setString(1, id);
-            psta.setString(2, nombre);
-            psta.setString(3, ap1);
-            psta.setString(4, ap2);
-            psta.setString(5, fe);
-            psta.setString(6, sex);
-            psta.execute();
-            psta.close();
-            JOptionPane.showMessageDialog(this, "El cliente se agrego correctamente.", "Mensaje", 0,icono);
-            this.dispose();
+            ps = cn.prepareStatement(insertar);
+            ps.setInt(1, Integer.parseInt(txfID.getText().toString().trim()));
+            ps.setString(2, txfName.getText().toString());
+            ps.setString(3, txfApellido1.getText().toString());
+            ps.setString(4, txfApellido2.getText().toString());
+            ps.setString(5, txfFechaN.getText().toString());
+            ps.setString(6, txfSexo.getText().toString());
+            Resultado = ps.executeUpdate();
+            if (Resultado > 0) {
+                System.out.println("Registro Exitoso");
+                JOptionPane.showMessageDialog(this, "El cliente se agrego correctamente.", "Mensaje", 0, icono);
+                this.dispose();
+            } else {
+                System.out.println("No se pudo Registrar");
+            }
         } catch (Exception e) {
-            System.out.println("error; " + e);
+            System.out.println("Error en Registrar: " + e.getMessage());
             JOptionPane.showMessageDialog(this, "No se pudo agregar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jLabel2MouseClicked
+
+    }//GEN-LAST:event_btnAgregarCMouseClicked
 
     /**
      * @param args the command line arguments
@@ -271,9 +261,8 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAgregarC;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

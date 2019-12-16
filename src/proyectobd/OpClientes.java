@@ -7,15 +7,16 @@ package proyectobd;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class OpClientes extends javax.swing.JFrame {
-
+    
     DefaultTableModel modeloT = new DefaultTableModel();
     static Connection cn;
     static Statement s;
     static ResultSet rs;
-
+    
     public OpClientes() {
         initComponents();
         modeloT.addColumn("No. Cliente");
@@ -25,7 +26,7 @@ public class OpClientes extends javax.swing.JFrame {
         modeloT.addColumn("Fecha de Nacimiento");
         modeloT.addColumn("Sexo");
         jTClientes.setModel(modeloT);
-
+        
         try {
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
@@ -59,7 +60,7 @@ public class OpClientes extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        
     }
 
     /**
@@ -235,25 +236,25 @@ public class OpClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        //        ImageIcon icono =new ImageIcon ("src/imagenes/Ok.png");
-        //        String idC = tfIdCliente.getText();
-        //        try {
-        //            //Para establecer el modelo al JTable
-        //            //Para conectarnos a nuestra base de datos
-        //            String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-        //            // Establecemos los valores de cadena de conexión, usuario y contraseña
-        //            cn = DriverManager.getConnection(url, "system", "SuprPausa1");
-        //
-        //            String insertar = " DELETE FROM CLIENTES WHERE ID_CLIENTE = ?  ";
-        //            PreparedStatement psta = cn.prepareStatement(insertar);
-        //            psta.setString(1, idC);
-        //            psta.execute();
-        //            psta.close();
-        //            JOptionPane.showMessageDialog(this, "El cliente se elimino correctamete.", "Mensaje", 0,icono);
-        //        } catch (Exception e) {
-        //            System.out.println("error; " + e);
-        //            JOptionPane.showMessageDialog(this, "No se pudo eliminar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
-        //        }
+        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
+        int fila = jTClientes.getSelectedRow();
+        String id = jTClientes.getValueAt(fila, 0).toString();
+        if (fila >= 0) {
+        try{
+            String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+            // Establecemos los valores de cadena de conexión, usuario y contraseña
+            cn = DriverManager.getConnection(url, "system", "SuprPausa1");
+            PreparedStatement pps = cn.prepareStatement(" DELETE FROM CLIENTES WHERE ID_CLIENTE = '"+id+"'");
+            pps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "El cliente se elimino correctamete.", "Mensaje", 0, icono);
+        }catch(SQLException e){
+            System.out.println("error; " + e);
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
+        
+        }    
+        }
+        
+        
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
@@ -262,7 +263,7 @@ public class OpClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
-
+        
         String idC = IdCliente.getText().toString(), Name = NombreC.getText().toString();
         //En caso de que los campos esten vacios
         if (idC.equals("") && Name.equals("")) {
@@ -296,7 +297,7 @@ public class OpClientes extends javax.swing.JFrame {
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
                 }
-
+                
                 int contador = 0;
 
                 //Creando las filas para el JTable
@@ -313,7 +314,7 @@ public class OpClientes extends javax.swing.JFrame {
                 }
                 rs.close();
                 cn.close();
-
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
