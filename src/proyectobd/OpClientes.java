@@ -296,16 +296,24 @@ public class OpClientes extends javax.swing.JFrame {
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
                 }
+
+                int contador = 0;
+
                 //Creando las filas para el JTable
                 while (rs.next()) {
+                    contador++;
                     Object[] fila = new Object[cantidadColumnas];
                     for (int i = 0; i < cantidadColumnas; i++) {
                         fila[i] = rs.getObject(i + 1);
                     }
                     modelo.addRow(fila);
                 }
+                if (contador == 0) {
+                    JOptionPane.showMessageDialog(this, "No se encontro al cliente solicitado.", "ERROR", JOptionPane.WARNING_MESSAGE);
+                }
                 rs.close();
                 cn.close();
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -339,6 +347,7 @@ public class OpClientes extends javax.swing.JFrame {
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
                 }
+                int contador = 0;
                 //Creando las filas para el JTable
                 while (rs.next()) {
                     Object[] fila = new Object[cantidadColumnas];
@@ -346,6 +355,9 @@ public class OpClientes extends javax.swing.JFrame {
                         fila[i] = rs.getObject(i + 1);
                     }
                     modelo.addRow(fila);
+                }
+                if (contador == 0) {
+                    JOptionPane.showMessageDialog(this, "No se encontro al cliente solicitado.", "ERROR", JOptionPane.WARNING_MESSAGE);
                 }
                 rs.close();
                 cn.close();
@@ -356,7 +368,6 @@ public class OpClientes extends javax.swing.JFrame {
             NombreC.setText("");
         }
 //------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
         //En caso de que solo conozca el id
@@ -383,6 +394,7 @@ public class OpClientes extends javax.swing.JFrame {
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
                 }
+                int contador = 0;
                 //Creando las filas para el JTable
                 while (rs.next()) {
                     Object[] fila = new Object[cantidadColumnas];
@@ -391,6 +403,7 @@ public class OpClientes extends javax.swing.JFrame {
                     }
                     modelo.addRow(fila);
                 }
+                
                 rs.close();
                 cn.close();
             } catch (Exception ex) {
@@ -403,7 +416,7 @@ public class OpClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchMouseClicked
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
-         try {
+        try {
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
             this.jTClientes.setModel(modelo);
