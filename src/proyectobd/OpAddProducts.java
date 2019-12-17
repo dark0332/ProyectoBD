@@ -15,24 +15,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+public class OpAddProducts extends javax.swing.JFrame {
 
-/**
- *
- * @author GVXTR
- */
-public class AddUser extends javax.swing.JFrame {
-
-//    static Connection cn;
-//    static Statement s;
-//    static ResultSet rs;
     PreparedStatement ps;
     ResultSet rs;
     conexion con = new conexion();
     Connection cn = con.getConection();
-
-    public AddUser() {
+    public OpAddProducts() {
         initComponents();
-
     }
 
     /**
@@ -60,7 +50,7 @@ public class AddUser extends javax.swing.JFrame {
         txfFechaN = new javax.swing.JTextField();
         txfSexo = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -108,7 +98,7 @@ public class AddUser extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -193,22 +183,17 @@ public class AddUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txfIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfIDActionPerformed
-
     private void btnAgregarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCMouseClicked
         ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-        String insertar = " INSERT INTO CLIENTES VALUES(?,?,?,?,?,?) ";
+        String insertar = " INSERT INTO PRODUCTOS VALUES(?,?,?,?,?) ";
         int Resultado;
         try {
             ps = cn.prepareStatement(insertar);
-            ps.setInt(1, Integer.parseInt(txfID.getText().toString().trim()));
-            ps.setString(2, txfName.getText().toString());
-            ps.setString(3, txfApellido1.getText().toString());
-            ps.setString(4, txfApellido2.getText().toString());
-            ps.setString(5, txfFechaN.getText().toString());
-            ps.setString(6, txfSexo.getText().toString());
+            ps.setString(1, txfName.getText().toString());
+            ps.setString(2, txfApellido1.getText().toString());
+            ps.setString(3, txfApellido2.getText().toString());
+            ps.setString(4, txfFechaN.getText().toString());
+            ps.setString(5, txfSexo.getText().toString());
             Resultado = ps.executeUpdate();
             if (Resultado > 0) {
                 System.out.println("Registro Exitoso");
@@ -221,8 +206,11 @@ public class AddUser extends javax.swing.JFrame {
             System.out.println("Error en Registrar: " + e.getMessage());
             JOptionPane.showMessageDialog(this, "No se pudo agregar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-
     }//GEN-LAST:event_btnAgregarCMouseClicked
+
+    private void txfIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,21 +229,20 @@ public class AddUser extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddProducts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddProducts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddProducts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddProducts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddUser().setVisible(true);
+                new OpAddProducts().setVisible(true);
             }
         });
     }

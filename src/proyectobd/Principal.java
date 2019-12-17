@@ -296,9 +296,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOClientesMouseClicked
 
     private void btnOProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOProveedoresMouseClicked
-//        Ventas go = new Ventas();
-//        go.setVisible(true);
-//        this.dispose();
+        OpProveedores go = new OpProveedores();
+        go.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnOProveedoresMouseClicked
 
     private void btnOProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOProductosMouseClicked

@@ -10,36 +10,38 @@ import java.sql.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class OpClientes extends javax.swing.JFrame {
+/**
+ *
+ * @author GVXTR
+ */
+public class OpProveedores extends javax.swing.JFrame {
 
     DefaultTableModel modeloT = new DefaultTableModel();
     PreparedStatement ps;
     ResultSet rs;
     Statement s;
     conexion con = new conexion();
-    
 
-    public void Eliminar() {
-        String eliminar = "DELETE FROM CLIENTES WHERE ID_CLIENTE = ?";
-        int resultado;
-        try {
-            Connection cn = con.getConection();
-            ps = cn.prepareStatement(eliminar);
-            ps.setInt(1, Integer.parseInt(IdCliente.getText().toString().trim()));
-            resultado = ps.executeUpdate();
-            if (resultado > 0) {
-                System.out.println("Eliminado con exito");
-
-            } else {
-                System.out.println("Error al Eliminar");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("Error console: " + e);
-        }
-    }
-
-    public OpClientes() {
+//    public void Eliminar() {
+//        String eliminar = "DELETE FROM CLIENTES WHERE ID_CLIENTE = ?";
+//        int resultado;
+//        try {
+//            Connection cn = con.getConection();
+//            ps = cn.prepareStatement(eliminar);
+//            ps.setInt(1, Integer.parseInt(IdCliente.getText().toString().trim()));
+//            resultado = ps.executeUpdate();
+//            if (resultado > 0) {
+//                System.out.println("Eliminado con exito");
+//
+//            } else {
+//                System.out.println("Error al Eliminar");
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error: " + e.getMessage());
+//            System.out.println("Error console: " + e);
+//        }
+//    }
+    public OpProveedores() {
         initComponents();
         modeloT.addColumn("No. Cliente");
         modeloT.addColumn("Nombre");
@@ -47,18 +49,18 @@ public class OpClientes extends javax.swing.JFrame {
         modeloT.addColumn("Apellido Materno");
         modeloT.addColumn("Fecha de Nacimiento");
         modeloT.addColumn("Sexo");
-        jTClientes.setModel(modeloT);
+        jTOpProveedores.setModel(modeloT);
 
         try {
             Connection cn = con.getConection();
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
-            this.jTClientes.setModel(modelo);
+            this.jTOpProveedores.setModel(modelo);
 
             //Para ejecutar la consulta
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-            rs = s.executeQuery("SELECT * FROM CLIENTES");
+            rs = s.executeQuery("SELECT * FROM PROVEEDOR");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
@@ -99,7 +101,7 @@ public class OpClientes extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         NombreC = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTClientes = new javax.swing.JTable();
+        jTOpProveedores = new javax.swing.JTable();
         btnEliminar = new javax.swing.JLabel();
         btnSearch = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JLabel();
@@ -134,13 +136,13 @@ public class OpClientes extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel1.setText("ID Cliente:");
+        jLabel1.setText("ID Proveedor:");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel2.setText("Nombre Cliente:");
+        jLabel2.setText("Nombre Proveedor:");
 
-        jTClientes.setModel(new javax.swing.table.DefaultTableModel(
+        jTOpProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -151,7 +153,7 @@ public class OpClientes extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTClientes);
+        jScrollPane1.setViewportView(jTOpProveedores);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Eliminar.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,24 +257,24 @@ public class OpClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-//        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-//        int fila = jTClientes.getSelectedRow();
-//        String id = jTClientes.getValueAt(fila, 0).toString();
-//        if (fila >= 0) {
-//            try {
-//                String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-//                // Establecemos los valores de cadena de conexión, usuario y contraseña
-//                cn = DriverManager.getConnection(url, "system", "SuprPausa1");
-//                PreparedStatement pps = cn.prepareStatement(" DELETE FROM CLIENTES WHERE ID_CLIENTE = '" + id + "'");
-//                pps.executeUpdate();
-//                JOptionPane.showMessageDialog(this, "El cliente se elimino correctamete.", "Mensaje", 0, icono);
-//            } catch (SQLException e) {
-//                System.out.println("error; " + e);
-//                JOptionPane.showMessageDialog(this, "No se pudo eliminar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
-//
-//            }
-//        }
-//
+        //        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
+        //        int fila = jTClientes.getSelectedRow();
+        //        String id = jTClientes.getValueAt(fila, 0).toString();
+        //        if (fila >= 0) {
+        //            try {
+        //                String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+        //                // Establecemos los valores de cadena de conexión, usuario y contraseña
+        //                cn = DriverManager.getConnection(url, "system", "SuprPausa1");
+        //                PreparedStatement pps = cn.prepareStatement(" DELETE FROM CLIENTES WHERE ID_CLIENTE = '" + id + "'");
+        //                pps.executeUpdate();
+        //                JOptionPane.showMessageDialog(this, "El cliente se elimino correctamete.", "Mensaje", 0, icono);
+        //            } catch (SQLException e) {
+        //                System.out.println("error; " + e);
+        //                JOptionPane.showMessageDialog(this, "No se pudo eliminar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
+        //
+        //            }
+        //        }
+        //
 
         String eliminar = "DELETE FROM CLIENTES WHERE ID_CLIENTE = ?";
         int resultado;
@@ -292,11 +294,6 @@ public class OpClientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
-    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        OpAddClient go = new OpAddClient();
-        go.setVisible(true);
-    }//GEN-LAST:event_btnAgregarMouseClicked
-
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
 
         String idC = IdCliente.getText().toString(), Name = NombreC.getText().toString();
@@ -307,7 +304,7 @@ public class OpClientes extends javax.swing.JFrame {
             NombreC.setText("");
         }
 
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
         //En caso de que solo conozca el id
         if (!idC.equals("") && Name.equals("")) {
             modeloT.setRowCount(0);
@@ -316,7 +313,7 @@ public class OpClientes extends javax.swing.JFrame {
                 Connection cn = con.getConection();
                 //Para establecer el modelo al JTable
                 DefaultTableModel modelo = new DefaultTableModel();
-                this.jTClientes.setModel(modelo);
+                this.jTOpProveedores.setModel(modelo);
                 //Para conectarnos a nuestra base de datos
                 String url = "jdbc:oracle:thin:@localhost:1521:orcl";
                 // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -324,7 +321,7 @@ public class OpClientes extends javax.swing.JFrame {
                 //Para ejecutar la consulta
                 s = cn.createStatement();
                 //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-                rs = s.executeQuery("SELECT * FROM CLIENTES WHERE ID_CLIENTE = '" + idC + "'");
+                rs = s.executeQuery("SELECT * FROM PROVEEDOR WHERE ID_PROVEEDOR = '" + idC + "'");
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
@@ -357,9 +354,9 @@ public class OpClientes extends javax.swing.JFrame {
             IdCliente.setText("");
             NombreC.setText("");
         }
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
         //En caso de que solo conozca el id
         if (idC.equals("") && !Name.equals("")) {
             modeloT.setRowCount(0);
@@ -368,7 +365,7 @@ public class OpClientes extends javax.swing.JFrame {
                 Connection cn = con.getConection();
                 //Para establecer el modelo al JTable
                 DefaultTableModel modelo = new DefaultTableModel();
-                this.jTClientes.setModel(modelo);
+                this.jTOpProveedores.setModel(modelo);
                 //Para conectarnos a nuestra base de datos
                 String url = "jdbc:oracle:thin:@localhost:1521:orcl";
                 // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -376,7 +373,7 @@ public class OpClientes extends javax.swing.JFrame {
                 //Para ejecutar la consulta
                 s = cn.createStatement();
                 //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-                rs = s.executeQuery("SELECT * FROM CLIENTES WHERE NOM_CLIENTE = '" + Name + "'");
+                rs = s.executeQuery("SELECT * FROM PROVEEDOR WHERE NOM_PROV = '" + Name + "'");
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
@@ -405,9 +402,9 @@ public class OpClientes extends javax.swing.JFrame {
             IdCliente.setText("");
             NombreC.setText("");
         }
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
         //En caso de que solo conozca el id
         if (!idC.equals("") && !Name.equals("")) {
             modeloT.setRowCount(0);
@@ -416,7 +413,7 @@ public class OpClientes extends javax.swing.JFrame {
                 Connection cn = con.getConection();
                 //Para establecer el modelo al JTable
                 DefaultTableModel modelo = new DefaultTableModel();
-                this.jTClientes.setModel(modelo);
+                this.jTOpProveedores.setModel(modelo);
                 //Para conectarnos a nuestra base de datos
                 String url = "jdbc:oracle:thin:@localhost:1521:orcl";
                 // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -424,7 +421,7 @@ public class OpClientes extends javax.swing.JFrame {
                 //Para ejecutar la consulta
                 s = cn.createStatement();
                 //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-                rs = s.executeQuery("SELECT * FROM CLIENTES WHERE ID_CLIENTE = '" + idC + "' OR NOM_CLIENTE = '" + Name + "'");
+                rs = s.executeQuery("SELECT * FROM PROVEEDOR WHERE ID_PROVEEDOR = '" + idC + "' OR NOM_PROV = '" + Name + "'");
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
@@ -451,7 +448,7 @@ public class OpClientes extends javax.swing.JFrame {
             IdCliente.setText("");
             NombreC.setText("");
         }
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
     }//GEN-LAST:event_btnSearchMouseClicked
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
@@ -459,7 +456,7 @@ public class OpClientes extends javax.swing.JFrame {
             Connection cn = con.getConection();
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
-            this.jTClientes.setModel(modelo);
+            this.jTOpProveedores.setModel(modelo);
             //Para conectarnos a nuestra base de datos
             String url = "jdbc:oracle:thin:@localhost:1521:orcl";
             // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -467,7 +464,7 @@ public class OpClientes extends javax.swing.JFrame {
             //Para ejecutar la consulta
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-            rs = s.executeQuery("SELECT * FROM CLIENTES");
+            rs = s.executeQuery("SELECT * FROM PROVEEDOR");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
@@ -491,6 +488,11 @@ public class OpClientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnUpdateMouseClicked
 
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        OpAddProveedores go = new OpAddProveedores();
+        go.setVisible(true);
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -508,20 +510,20 @@ public class OpClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OpClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OpClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OpClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OpClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OpClientes().setVisible(true);
+                new OpProveedores().setVisible(true);
             }
         });
     }
@@ -539,6 +541,6 @@ public class OpClientes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTClientes;
+    private javax.swing.JTable jTOpProveedores;
     // End of variables declaration//GEN-END:variables
 }
