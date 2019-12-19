@@ -7,10 +7,11 @@ package proyectobd;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.sql.CallableStatement;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class OpProductos extends javax.swing.JFrame {
+public class ConProductos extends javax.swing.JFrame {
 
     DefaultTableModel modeloT = new DefaultTableModel();
     PreparedStatement ps;
@@ -18,31 +19,23 @@ public class OpProductos extends javax.swing.JFrame {
     Statement s;
     conexion con = new conexion();
 
-    public OpProductos() {
+    public ConProductos() {
         initComponents();
-        modeloT.addColumn("No. Cliente");
-        modeloT.addColumn("Nombre");
-        modeloT.addColumn("apellido Paterno");
-        modeloT.addColumn("Apellido Materno");
-        modeloT.addColumn("Fecha de Nacimiento");
-        modeloT.addColumn("Sexo");
-        jTOpProductos.setModel(modeloT);
 
         try {
             Connection cn = con.getConection();
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
-            this.jTOpProductos.setModel(modelo);
+            this.jTClientes.setModel(modelo);
 
             //Para ejecutar la consulta
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-            rs = s.executeQuery("SELECT ID_PRODUCTO,NOM_PRODUCTO,TIP_PRODUCTO,FEC_CADUCIDAD,PRECIO,ID_PROVEEDOR,STOCK,ESTADOPRODU FROM PRODUCTOS WHERE ESTADOPRODU = 'DISPONIBLE'");
-            
+            rs = s.executeQuery("SELECT * FROM PRODUCTOS ");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount() - 1;
+            int cantidadColumnas = rsMd.getColumnCount();
             //Establecer como cabezeras el nombre de las colimnas
             for (int i = 1; i <= cantidadColumnas; i++) {
                 modelo.addColumn(rsMd.getColumnLabel(i));
@@ -59,7 +52,6 @@ public class OpProductos extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     /**
@@ -79,12 +71,10 @@ public class OpProductos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         NombreC = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTOpProductos = new javax.swing.JTable();
+        jTClientes = new javax.swing.JTable();
         btnSearch = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JLabel();
-        btnAgregar = new javax.swing.JLabel();
-        btnActivar = new javax.swing.JLabel();
-        btnDesactivar = new javax.swing.JLabel();
+        CboClientes = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,7 +111,7 @@ public class OpProductos extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(66, 66, 66));
         jLabel2.setText("Nombre Producto:");
 
-        jTOpProductos.setModel(new javax.swing.table.DefaultTableModel(
+        jTClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -132,7 +122,7 @@ public class OpProductos extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTOpProductos);
+        jScrollPane1.setViewportView(jTClientes);
 
         btnSearch.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(66, 66, 66));
@@ -154,24 +144,10 @@ public class OpProductos extends javax.swing.JFrame {
             }
         });
 
-        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Agregar.png"))); // NOI18N
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseClicked(evt);
-            }
-        });
-
-        btnActivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Activar.png"))); // NOI18N
-        btnActivar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnActivarMouseClicked(evt);
-            }
-        });
-
-        btnDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Desactivar.png"))); // NOI18N
-        btnDesactivar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDesactivarMouseClicked(evt);
+        CboClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRECIOS", "AUMENTO", "DESCUENTO", "" }));
+        CboClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CboClientesActionPerformed(evt);
             }
         });
 
@@ -191,16 +167,12 @@ public class OpProductos extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
+                        .addGap(38, 38, 38)
+                        .addComponent(CboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSearch)
                         .addGap(18, 18, 18)
-                        .addComponent(btnUpdate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDesactivar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActivar))
+                        .addComponent(btnUpdate))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -209,17 +181,14 @@ public class OpProductos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(IdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)
-                        .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSearch)
-                        .addComponent(btnUpdate))
-                    .addComponent(btnAgregar)
-                    .addComponent(btnDesactivar)
-                    .addComponent(btnActivar))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(IdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch)
+                    .addComponent(btnUpdate)
+                    .addComponent(CboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -246,10 +215,10 @@ public class OpProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
-
+        String seleccion = CboClientes.getSelectedItem().toString();
         String idC = IdCliente.getText().toString(), Name = NombreC.getText().toString();
         //En caso de que los campos esten vacios
-        if (idC.equals("") && Name.equals("")) {
+        if (idC.equals("") && Name.equals("") && seleccion.equals("")) {
             JOptionPane.showMessageDialog(this, "Porfavor llene almenos uno de los campos.", "ERROR", JOptionPane.WARNING_MESSAGE);
             IdCliente.setText("");
             NombreC.setText("");
@@ -264,7 +233,7 @@ public class OpProductos extends javax.swing.JFrame {
                 Connection cn = con.getConection();
                 //Para establecer el modelo al JTable
                 DefaultTableModel modelo = new DefaultTableModel();
-                this.jTOpProductos.setModel(modelo);
+                this.jTClientes.setModel(modelo);
                 //Para conectarnos a nuestra base de datos
                 String url = "jdbc:oracle:thin:@localhost:1521:orcl";
                 // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -272,11 +241,11 @@ public class OpProductos extends javax.swing.JFrame {
                 //Para ejecutar la consulta
                 s = cn.createStatement();
                 //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-                rs = s.executeQuery("SELECT ID_PRODUCTO,NOM_PRODUCTO,TIP_PRODUCTO,FEC_CADUCIDAD,PRECIO,ID_PROVEEDOR,STOCK,ESTADOPRODU FROM PRODUCTOS WHERE ID_PRODUCTO = '" + idC + "'");
+                rs = s.executeQuery("SELECT * FROM PRODUCTOS WHERE ID_PRODUCTO = '" + idC + "'");
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
-                int cantidadColumnas = rsMd.getColumnCount() - 1;
+                int cantidadColumnas = rsMd.getColumnCount();
                 //Establecer como cabezeras el nombre de las colimnas
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
@@ -294,7 +263,7 @@ public class OpProductos extends javax.swing.JFrame {
                     modelo.addRow(fila);
                 }
                 if (contador == 0) {
-                    JOptionPane.showMessageDialog(this, "No se encontro al cliente solicitado.", "ERROR", JOptionPane.WARNING_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, "No se encontro al cliente solicitado.", "ERROR", JOptionPane.WARNING_MESSAGE);
                 }
                 rs.close();
                 cn.close();
@@ -316,7 +285,7 @@ public class OpProductos extends javax.swing.JFrame {
                 Connection cn = con.getConection();
                 //Para establecer el modelo al JTable
                 DefaultTableModel modelo = new DefaultTableModel();
-                this.jTOpProductos.setModel(modelo);
+                this.jTClientes.setModel(modelo);
                 //Para conectarnos a nuestra base de datos
                 String url = "jdbc:oracle:thin:@localhost:1521:orcl";
                 // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -324,11 +293,11 @@ public class OpProductos extends javax.swing.JFrame {
                 //Para ejecutar la consulta
                 s = cn.createStatement();
                 //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-                rs = s.executeQuery("SELECT ID_PRODUCTO,NOM_PRODUCTO,TIP_PRODUCTO,FEC_CADUCIDAD,PRECIO,ID_PROVEEDOR,STOCK,ESTADOPRODU FROM PRODUCTOS WHERE NOM_PRODUCTO = '" + Name + "'");
+                rs = s.executeQuery("SELECT * FROM PRODUCTOS WHERE NOM_PRODUCTO = '" + Name + "'");
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
-                int cantidadColumnas = rsMd.getColumnCount() - 1;
+                int cantidadColumnas = rsMd.getColumnCount();
                 //Establecer como cabezeras el nombre de las colimnas
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
@@ -343,7 +312,7 @@ public class OpProductos extends javax.swing.JFrame {
                     modelo.addRow(fila);
                 }
                 if (contador == 0) {
-                    JOptionPane.showMessageDialog(this, "No se encontro al cliente solicitado.", "ERROR", JOptionPane.WARNING_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, "No se encontro al cliente solicitado.", "ERROR", JOptionPane.WARNING_MESSAGE);
                 }
                 rs.close();
                 cn.close();
@@ -364,7 +333,7 @@ public class OpProductos extends javax.swing.JFrame {
                 Connection cn = con.getConection();
                 //Para establecer el modelo al JTable
                 DefaultTableModel modelo = new DefaultTableModel();
-                this.jTOpProductos.setModel(modelo);
+                this.jTClientes.setModel(modelo);
                 //Para conectarnos a nuestra base de datos
                 String url = "jdbc:oracle:thin:@localhost:1521:orcl";
                 // Establecemos los valores de cadena de conexión, usuario y contraseña
@@ -372,11 +341,11 @@ public class OpProductos extends javax.swing.JFrame {
                 //Para ejecutar la consulta
                 s = cn.createStatement();
                 //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-                rs = s.executeQuery("SELECT ID_PRODUCTO,NOM_PRODUCTO,TIP_PRODUCTO,FEC_CADUCIDAD,PRECIO,ID_PROVEEDOR,STOCK,ESTADOPRODU FROM PRODUCTOS WHERE ID_PRODUCTO = '" + idC + "' OR NOM_PRODUCTO = '" + Name + "'");
+                rs = s.executeQuery("SELECT * FROM PRODUCTOS WHERE ID_PRODUCTO = '" + idC + "' OR NOM_PRODUCTO = '" + Name + "'");
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
-                int cantidadColumnas = rsMd.getColumnCount() - 1;
+                int cantidadColumnas = rsMd.getColumnCount();
                 //Establecer como cabezeras el nombre de las colimnas
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
@@ -400,6 +369,44 @@ public class OpProductos extends javax.swing.JFrame {
             NombreC.setText("");
         }
         //------------------------------------------------------------------------------
+
+        if (seleccion.equals("AUMENTO")) {
+            IdCliente.setText("");
+            NombreC.setText("");
+
+            
+            CallableStatement cstm = null;
+            boolean resp = true;
+            try {
+                Connection cn = con.getConection();
+                cn.setAutoCommit(false);
+                cstm = cn.prepareCall("{Call AUMENTO}");
+                resp = cstm.execute();
+                cn.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if (seleccion.equals("DESCUENTO")) {
+            IdCliente.setText("");
+            NombreC.setText("");
+
+            
+            CallableStatement cstm = null;
+            boolean resp = true;
+            try {
+                Connection cn = con.getConection();
+                cn.setAutoCommit(false);
+                cstm = cn.prepareCall("{Call DESCUENTO}");
+                resp = cstm.execute();
+                cn.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }//GEN-LAST:event_btnSearchMouseClicked
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
@@ -407,19 +414,19 @@ public class OpProductos extends javax.swing.JFrame {
             Connection cn = con.getConection();
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
-            this.jTOpProductos.setModel(modelo);
+            this.jTClientes.setModel(modelo);
             //Para conectarnos a nuestra base de datos
             String url = "jdbc:oracle:thin:@localhost:1521:orcl";
             // Establecemos los valores de cadena de conexión, usuario y contraseña
             cn = DriverManager.getConnection(url, "system", "SuprPausa1");
             //Para ejecutar la consulta
             s = cn.createStatement();
-            //Ejecutamos la consulta y los datos lo almacenamose en un ResultSet
-            rs = s.executeQuery("SELECT ID_PRODUCTO,NOM_PRODUCTO,TIP_PRODUCTO,FEC_CADUCIDAD,PRECIO,ID_PROVEEDOR,STOCK,ESTADOPRODU FROM PRODUCTOS WHERE ESTADOPRODU = 'DISPONIBLE'");
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+            rs = s.executeQuery("SELECT * FROM PRODUCTOS ");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount() - 1;
+            int cantidadColumnas = rsMd.getColumnCount();
             //Establecer como cabezeras el nombre de las colimnas
             for (int i = 1; i <= cantidadColumnas; i++) {
                 modelo.addColumn(rsMd.getColumnLabel(i));
@@ -439,42 +446,9 @@ public class OpProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnUpdateMouseClicked
 
-    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        OpAddProducts go = new OpAddProducts();
-        go.setVisible(true);
-    }//GEN-LAST:event_btnAgregarMouseClicked
-
-    private void btnActivarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActivarMouseClicked
-        String idC = IdCliente.getText().toString().trim();
-        CallableStatement cstm = null;
-        boolean resp = true;
-        try {
-            Connection cn = con.getConection();
-            cn.setAutoCommit(false);
-            cstm = cn.prepareCall("{Call ACTIVARPRODUCTO(?)}");
-            cstm.setString(1, idC);
-            resp = cstm.execute();
-            cn.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnActivarMouseClicked
-
-    private void btnDesactivarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDesactivarMouseClicked
-        String idC = IdCliente.getText().toString().trim();
-        CallableStatement cstm = null;
-        boolean resp = true;
-        try {
-            Connection cn = con.getConection();
-            cn.setAutoCommit(false);
-            cstm = cn.prepareCall("{Call DESACTIVARPRODUCTO(?)}");
-            cstm.setString(1, idC);
-            resp = cstm.execute();
-            cn.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnDesactivarMouseClicked
+    private void CboClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CboClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,13 +467,13 @@ public class OpProductos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OpProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OpProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OpProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OpProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -507,18 +481,16 @@ public class OpProductos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OpProductos().setVisible(true);
+                new ConProductos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CboClientes;
     private javax.swing.JTextField IdCliente;
     private javax.swing.JTextField NombreC;
-    private javax.swing.JLabel btnActivar;
-    private javax.swing.JLabel btnAgregar;
     private javax.swing.JLabel btnBack;
-    private javax.swing.JLabel btnDesactivar;
     private javax.swing.JLabel btnSearch;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -526,6 +498,6 @@ public class OpProductos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTOpProductos;
+    private javax.swing.JTable jTClientes;
     // End of variables declaration//GEN-END:variables
 }

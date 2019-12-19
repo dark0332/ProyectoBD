@@ -64,7 +64,7 @@ public class OpProveedores extends javax.swing.JFrame {
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount();
+            int cantidadColumnas = rsMd.getColumnCount() - 1;
             //Establecer como cabezeras el nombre de las colimnas
             for (int i = 1; i <= cantidadColumnas; i++) {
                 modelo.addColumn(rsMd.getColumnLabel(i));
@@ -100,12 +100,13 @@ public class OpProveedores extends javax.swing.JFrame {
         IdCliente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         NombreC = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTOpProveedores = new javax.swing.JTable();
-        btnEliminar = new javax.swing.JLabel();
         btnSearch = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JLabel();
+        btnActivar = new javax.swing.JLabel();
+        btnDesactivar = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTOpProveedores = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,26 +143,6 @@ public class OpProveedores extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(66, 66, 66));
         jLabel2.setText("Nombre Proveedor:");
 
-        jTOpProveedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(jTOpProveedores);
-
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Eliminar.png"))); // NOI18N
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseClicked(evt);
-            }
-        });
-
         btnSearch.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(66, 66, 66));
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Buscar.png"))); // NOI18N
@@ -189,6 +170,33 @@ public class OpProveedores extends javax.swing.JFrame {
             }
         });
 
+        btnActivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Activar.png"))); // NOI18N
+        btnActivar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActivarMouseClicked(evt);
+            }
+        });
+
+        btnDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Desactivar.png"))); // NOI18N
+        btnDesactivar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDesactivarMouseClicked(evt);
+            }
+        });
+
+        jTOpProveedores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTOpProveedores);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -212,7 +220,9 @@ public class OpProveedores extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar))
+                        .addComponent(btnDesactivar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActivar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -222,7 +232,6 @@ public class OpProveedores extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEliminar)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(IdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +239,9 @@ public class OpProveedores extends javax.swing.JFrame {
                         .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSearch)
                         .addComponent(btnUpdate))
-                    .addComponent(btnAgregar))
+                    .addComponent(btnAgregar)
+                    .addComponent(btnDesactivar)
+                    .addComponent(btnActivar))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -255,44 +266,6 @@ public class OpProveedores extends javax.swing.JFrame {
         go.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBackMouseClicked
-
-    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        //        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-        //        int fila = jTClientes.getSelectedRow();
-        //        String id = jTClientes.getValueAt(fila, 0).toString();
-        //        if (fila >= 0) {
-        //            try {
-        //                String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-        //                // Establecemos los valores de cadena de conexión, usuario y contraseña
-        //                cn = DriverManager.getConnection(url, "system", "SuprPausa1");
-        //                PreparedStatement pps = cn.prepareStatement(" DELETE FROM CLIENTES WHERE ID_CLIENTE = '" + id + "'");
-        //                pps.executeUpdate();
-        //                JOptionPane.showMessageDialog(this, "El cliente se elimino correctamete.", "Mensaje", 0, icono);
-        //            } catch (SQLException e) {
-        //                System.out.println("error; " + e);
-        //                JOptionPane.showMessageDialog(this, "No se pudo eliminar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
-        //
-        //            }
-        //        }
-        //
-
-        String eliminar = "DELETE FROM CLIENTES WHERE ID_CLIENTE = ?";
-        int resultado;
-        try {
-            Connection cn = con.getConection();
-            ps = cn.prepareStatement(eliminar);
-            ps.setString(1, IdCliente.getText());
-            resultado = ps.executeUpdate();
-            if (resultado == 1) {
-                System.out.println("Eliminado con exito");
-
-            } else {
-                System.out.println("Error al Eliminar");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
 
@@ -325,7 +298,7 @@ public class OpProveedores extends javax.swing.JFrame {
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
-                int cantidadColumnas = rsMd.getColumnCount();
+                int cantidadColumnas = rsMd.getColumnCount() - 1;
                 //Establecer como cabezeras el nombre de las colimnas
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
@@ -377,7 +350,7 @@ public class OpProveedores extends javax.swing.JFrame {
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
-                int cantidadColumnas = rsMd.getColumnCount();
+                int cantidadColumnas = rsMd.getColumnCount() - 1;
                 //Establecer como cabezeras el nombre de las colimnas
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
@@ -425,7 +398,7 @@ public class OpProveedores extends javax.swing.JFrame {
                 //Obteniendo la informacion de las columnas que estan siendo consultadas
                 ResultSetMetaData rsMd = rs.getMetaData();
                 //La cantidad de columnas que tiene la consulta
-                int cantidadColumnas = rsMd.getColumnCount();
+                int cantidadColumnas = rsMd.getColumnCount() - 1;
                 //Establecer como cabezeras el nombre de las colimnas
                 for (int i = 1; i <= cantidadColumnas; i++) {
                     modelo.addColumn(rsMd.getColumnLabel(i));
@@ -468,7 +441,7 @@ public class OpProveedores extends javax.swing.JFrame {
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount();
+            int cantidadColumnas = rsMd.getColumnCount() - 1;
             //Establecer como cabezeras el nombre de las colimnas
             for (int i = 1; i <= cantidadColumnas; i++) {
                 modelo.addColumn(rsMd.getColumnLabel(i));
@@ -492,6 +465,38 @@ public class OpProveedores extends javax.swing.JFrame {
         OpAddProveedores go = new OpAddProveedores();
         go.setVisible(true);
     }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnActivarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActivarMouseClicked
+        String idC = IdCliente.getText().toString().trim();
+        CallableStatement cstm = null;
+        boolean resp = true;
+        try {
+            Connection cn = con.getConection();
+            cn.setAutoCommit(false);
+            cstm = cn.prepareCall("{Call ACTIVARPROVEEDOR(?)}");
+            cstm.setString(1, idC);
+            resp = cstm.execute();
+            cn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnActivarMouseClicked
+
+    private void btnDesactivarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDesactivarMouseClicked
+        String idC = IdCliente.getText().toString().trim();
+        CallableStatement cstm = null;
+        boolean resp = true;
+        try {
+            Connection cn = con.getConection();
+            cn.setAutoCommit(false);
+            cstm = cn.prepareCall("{Call DESACTIVARPROVEEDOR(?)}");
+            cstm.setString(1, idC);
+            resp = cstm.execute();
+            cn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnDesactivarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -531,9 +536,10 @@ public class OpProveedores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IdCliente;
     private javax.swing.JTextField NombreC;
+    private javax.swing.JLabel btnActivar;
     private javax.swing.JLabel btnAgregar;
     private javax.swing.JLabel btnBack;
-    private javax.swing.JLabel btnEliminar;
+    private javax.swing.JLabel btnDesactivar;
     private javax.swing.JLabel btnSearch;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel jLabel1;

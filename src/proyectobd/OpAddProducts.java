@@ -65,7 +65,7 @@ public class OpAddProducts extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel4.setText("ID Cliente:");
+        jLabel4.setText("ID Producto:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(66, 66, 66));
@@ -73,19 +73,19 @@ public class OpAddProducts extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel6.setText("Primer Apellido:");
+        jLabel6.setText("Tipo de Producto:");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel7.setText("Segundo Apellido:");
+        jLabel7.setText("Fecha Cad:");
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel8.setText("Fecha de Nacimiento");
+        jLabel8.setText("Precio:");
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel9.setText("Sexo:");
+        jLabel9.setText("Proveedor:");
 
         txfID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,7 +98,7 @@ public class OpAddProducts extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addContainerGap(79, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -109,7 +109,7 @@ public class OpAddProducts extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel9)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txfSexo))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addGap(18, 18, 18)
@@ -126,7 +126,7 @@ public class OpAddProducts extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txfName, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txfName)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(82, 82, 82)
                                 .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -184,27 +184,30 @@ public class OpAddProducts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCMouseClicked
-        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-        String insertar = " INSERT INTO PRODUCTOS VALUES(?,?,?,?,?) ";
+         ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
+        String insertar = " INSERT INTO PRODUCTOS VALUES(?,?,?,?,?,?,?) ";
+        String estado = "DISPONIBLE";
         int Resultado;
         try {
             ps = cn.prepareStatement(insertar);
-            ps.setString(1, txfName.getText().toString());
-            ps.setString(2, txfApellido1.getText().toString());
-            ps.setString(3, txfApellido2.getText().toString());
-            ps.setString(4, txfFechaN.getText().toString());
-            ps.setString(5, txfSexo.getText().toString());
+            ps.setString(1, txfID.getText().toString());
+            ps.setString(2, txfName.getText().toString());
+            ps.setString(3, txfApellido1.getText().toString());
+            ps.setString(4, txfApellido2.getText().toString());
+            ps.setString(5, txfFechaN.getText().toString());
+            ps.setString(6, txfSexo.getText().toString());
+            ps.setString(7, estado);
             Resultado = ps.executeUpdate();
             if (Resultado > 0) {
                 System.out.println("Registro Exitoso");
-                JOptionPane.showMessageDialog(this, "El cliente se agrego correctamente.", "Mensaje", 0, icono);
+                JOptionPane.showMessageDialog(this, "El Poducto se agrego correctamente.", "Mensaje", 0, icono);
                 this.dispose();
             } else {
                 System.out.println("No se pudo Registrar");
             }
         } catch (Exception e) {
             System.out.println("Error en Registrar: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "No se pudo agregar el cliente.", "ERROR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el Poducto.", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarCMouseClicked
 

@@ -199,16 +199,18 @@ public class OpAddClient extends javax.swing.JFrame {
 
     private void btnAgregarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCMouseClicked
         ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-        String insertar = " INSERT INTO CLIENTES VALUES(?,?,?,?,?,?) ";
+        String insertar = " INSERT INTO CLIENTES VALUES(?,?,?,?,?,?,?) ";
+        String estado = "LISTA BLANCA";
         int Resultado;
         try {
             ps = cn.prepareStatement(insertar);
-            ps.setString(1, "");
+            ps.setString(1, txfID.getText().toString());
             ps.setString(2, txfName.getText().toString());
             ps.setString(3, txfApellido1.getText().toString());
             ps.setString(4, txfApellido2.getText().toString());
             ps.setString(5, txfFechaN.getText().toString());
             ps.setString(6, txfSexo.getText().toString());
+            ps.setString(7, estado);
             Resultado = ps.executeUpdate();
             if (Resultado > 0) {
                 System.out.println("Registro Exitoso");

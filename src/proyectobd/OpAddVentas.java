@@ -16,14 +16,17 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public class OpAddProveedores extends javax.swing.JFrame {
+public class OpAddVentas extends javax.swing.JFrame {
 
+    //    static Connection cn;
+//    static Statement s;
+//    static ResultSet rs;
     PreparedStatement ps;
     ResultSet rs;
     conexion con = new conexion();
     Connection cn = con.getConection();
 
-    public OpAddProveedores() {
+    public OpAddVentas() {
         initComponents();
     }
 
@@ -44,13 +47,11 @@ public class OpAddProveedores extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         txfID = new javax.swing.JTextField();
         txfName = new javax.swing.JTextField();
         txfApellido1 = new javax.swing.JTextField();
         txfApellido2 = new javax.swing.JTextField();
         txfFechaN = new javax.swing.JTextField();
-        txfSexo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,27 +68,23 @@ public class OpAddProveedores extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel4.setText("ID Proveedor:");
+        jLabel4.setText("ID Venta:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel5.setText("Nombre:");
+        jLabel5.setText("Cantidad:");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel6.setText("Primer Apellido:");
+        jLabel6.setText("ID Producto:");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel7.setText("Segundo Apellido:");
+        jLabel7.setText("ID Cliente:");
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel8.setText("Fecha de Nacimiento");
-
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(66, 66, 66));
-        jLabel9.setText("Sexo:");
+        jLabel8.setText("ID Fecha:");
 
         txfID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,49 +97,46 @@ public class OpAddProveedores extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addContainerGap(127, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(121, 121, 121))
+                        .addComponent(btnAgregarC)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(31, 31, 31)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txfFechaN)
+                                    .addComponent(txfApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txfFechaN))
-                                .addComponent(jLabel4)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txfApellido2))
+                                    .addComponent(jLabel4))
+                                .addGap(126, 126, 126))
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txfApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txfName, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(42, 42, 42))
+                                    .addComponent(txfApellido1))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(84, 84, 84)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txfName, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(96, 96, 96))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAgregarC)
-                        .addContainerGap())))
+                        .addComponent(jLabel1)
+                        .addGap(133, 133, 133))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jLabel1)
-                .addGap(73, 73, 73)
+                .addGap(82, 82, 82)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -162,11 +156,7 @@ public class OpAddProveedores extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txfFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(76, 76, 76)
                 .addComponent(btnAgregarC)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -186,10 +176,10 @@ public class OpAddProveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCMouseClicked
-         ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-        String insertar = " INSERT INTO PROVEEDOR VALUES(?,?,?,?,?,?,?) ";
-        String estado = "DISPONIBLE";
-        int Resultado;
+        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
+        String insertar = " INSERT INTO VENTAS VALUES(?,?,?,?,?) ";
+        String estado = "LISTA BLANCA";
+        int Resultado = 0;
         try {
             ps = cn.prepareStatement(insertar);
             ps.setString(1, txfID.getText().toString());
@@ -197,19 +187,34 @@ public class OpAddProveedores extends javax.swing.JFrame {
             ps.setString(3, txfApellido1.getText().toString());
             ps.setString(4, txfApellido2.getText().toString());
             ps.setString(5, txfFechaN.getText().toString());
-            ps.setString(6, txfSexo.getText().toString());
-            ps.setString(7, estado);
             Resultado = ps.executeUpdate();
             if (Resultado > 0) {
                 System.out.println("Registro Exitoso");
-                JOptionPane.showMessageDialog(this, "El Proveedor se agrego correctamente.", "Mensaje", 0, icono);
+                JOptionPane.showMessageDialog(this, "La Venta se agrego correctamente.", "Mensaje", 0, icono);
                 this.dispose();
             } else {
                 System.out.println("No se pudo Registrar");
             }
         } catch (Exception e) {
             System.out.println("Error en Registrar: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "No se pudo agregar el Proveedor.", "ERROR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se pudo agregar La Venta.", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+        if (Resultado > 0) {
+            String idC = txfID.getText().toString().trim();
+            String cantidad = txfName.getText().toString().trim();
+            CallableStatement cstm = null;
+            boolean resp = true;
+            try {
+                Connection cn = con.getConection();
+                cn.setAutoCommit(false);
+                cstm = cn.prepareCall("{Call REDUCIR(?,?)}");
+                cstm.setString(1, idC);
+                cstm.setString(2, cantidad);
+                resp = cstm.execute();
+                cn.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btnAgregarCMouseClicked
 
@@ -234,20 +239,20 @@ public class OpAddProveedores extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OpAddProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OpAddProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OpAddProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OpAddProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OpAddVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OpAddProveedores().setVisible(true);
+                new OpAddVentas().setVisible(true);
             }
         });
     }
@@ -260,13 +265,11 @@ public class OpAddProveedores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txfApellido1;
     private javax.swing.JTextField txfApellido2;
     private javax.swing.JTextField txfFechaN;
     private javax.swing.JTextField txfID;
     private javax.swing.JTextField txfName;
-    private javax.swing.JTextField txfSexo;
     // End of variables declaration//GEN-END:variables
 }

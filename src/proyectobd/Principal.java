@@ -42,10 +42,10 @@ public class Principal extends javax.swing.JFrame {
         OpTexto = new javax.swing.JLabel();
         CardConsultas = new javax.swing.JPanel();
         btnCVentas = new javax.swing.JLabel();
-        btnCClientes = new javax.swing.JLabel();
         btnCProveedores = new javax.swing.JLabel();
         btnCProductos = new javax.swing.JLabel();
         OpTexto1 = new javax.swing.JLabel();
+        btnCClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -190,25 +190,25 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnCClientes.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnCClientes.setForeground(new java.awt.Color(76, 81, 81));
-        btnCClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clientes.png"))); // NOI18N
-        btnCClientes.setText("Clientes");
-        btnCClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCClientesMouseClicked(evt);
-            }
-        });
-
         btnCProveedores.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnCProveedores.setForeground(new java.awt.Color(76, 81, 81));
         btnCProveedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/proveedores.png"))); // NOI18N
         btnCProveedores.setText("Proveedores");
+        btnCProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCProveedoresMouseClicked(evt);
+            }
+        });
 
         btnCProductos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnCProductos.setForeground(new java.awt.Color(76, 81, 81));
         btnCProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos.png"))); // NOI18N
         btnCProductos.setText("Productos");
+        btnCProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCProductosMouseClicked(evt);
+            }
+        });
 
         OpTexto1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         OpTexto1.setForeground(new java.awt.Color(76, 81, 81));
@@ -219,12 +219,22 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnCClientes1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnCClientes1.setForeground(new java.awt.Color(76, 81, 81));
+        btnCClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clientes.png"))); // NOI18N
+        btnCClientes1.setText("Clientes");
+        btnCClientes1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCClientes1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout CardConsultasLayout = new javax.swing.GroupLayout(CardConsultas);
         CardConsultas.setLayout(CardConsultasLayout);
         CardConsultasLayout.setHorizontalGroup(
             CardConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CardConsultasLayout.createSequentialGroup()
-                .addContainerGap(200, Short.MAX_VALUE)
+                .addContainerGap(201, Short.MAX_VALUE)
                 .addGroup(CardConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardConsultasLayout.createSequentialGroup()
                         .addComponent(OpTexto1)
@@ -232,25 +242,25 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardConsultasLayout.createSequentialGroup()
                         .addComponent(btnCVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addComponent(btnCClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
                         .addComponent(btnCProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(139, 139, 139))))
+                        .addGap(143, 143, 143))))
         );
         CardConsultasLayout.setVerticalGroup(
             CardConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardConsultasLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(OpTexto1)
-                .addGap(80, 80, 80)
+                .addGap(82, 82, 82)
                 .addGroup(CardConsultasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
 
         PnlCards.add(CardConsultas, "CardConsultas");
@@ -284,9 +294,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultasMouseClicked
 
     private void btnOVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOVentasMouseClicked
-//        Ventas go = new Ventas();
-//        go.setVisible(true);
-//        this.dispose();
+        OpVentas go = new OpVentas();
+        go.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnOVentasMouseClicked
 
     private void btnOClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOClientesMouseClicked
@@ -302,22 +312,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOProveedoresMouseClicked
 
     private void btnOProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOProductosMouseClicked
-//        Ventas go = new Ventas();
-//        go.setVisible(true);
-//        this.dispose();
+        OpProductos go = new OpProductos();
+        go.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnOProductosMouseClicked
 
     private void btnCVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCVentasMouseClicked
-//        Ventas go = new Ventas();
-//        go.setVisible(true);
-//        this.dispose();
+        ConVentas go = new ConVentas();
+        go.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCVentasMouseClicked
-
-    private void btnCClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCClientesMouseClicked
-//        Ventas go = new Ventas();
-//        go.setVisible(true);
-//        this.dispose();
-    }//GEN-LAST:event_btnCClientesMouseClicked
 
     private void OpTextoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpTextoMouseClicked
         // TODO add your handling code here:
@@ -326,6 +330,21 @@ public class Principal extends javax.swing.JFrame {
     private void OpTexto1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpTexto1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_OpTexto1MouseClicked
+
+    private void btnCClientes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCClientes1MouseClicked
+        ConClientes go = new ConClientes();
+        go.setVisible(true);
+    }//GEN-LAST:event_btnCClientes1MouseClicked
+
+    private void btnCProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCProductosMouseClicked
+        ConProductos go = new ConProductos();
+        go.setVisible(true);
+    }//GEN-LAST:event_btnCProductosMouseClicked
+
+    private void btnCProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCProveedoresMouseClicked
+        ConProveedores go = new ConProveedores();
+        go.setVisible(true);
+    }//GEN-LAST:event_btnCProveedoresMouseClicked
 
     /**
      * @param args the command line arguments
@@ -369,7 +388,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel OpTexto1;
     private javax.swing.JPanel PnlAccion;
     private javax.swing.JPanel PnlCards;
-    private javax.swing.JLabel btnCClientes;
+    private javax.swing.JLabel btnCClientes1;
     private javax.swing.JLabel btnCProductos;
     private javax.swing.JLabel btnCProveedores;
     private javax.swing.JLabel btnCVentas;
