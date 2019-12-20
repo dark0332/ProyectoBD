@@ -18,13 +18,10 @@ import javax.swing.ImageIcon;
 
 public class OpAddVentas extends javax.swing.JFrame {
 
-    //    static Connection cn;
-//    static Statement s;
-//    static ResultSet rs;
     PreparedStatement ps;
     ResultSet rs;
+    Statement s;
     conexion con = new conexion();
-    Connection cn = con.getConection();
 
     public OpAddVentas() {
         initComponents();
@@ -176,44 +173,132 @@ public class OpAddVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCMouseClicked
-        ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
-        String insertar = " INSERT INTO VENTAS VALUES(?,?,?,?,?) ";
-        String estado = "LISTA BLANCA";
-        int Resultado = 0;
+        String idProducto = txfApellido1.getText().toString();
+        String idCliente = txfApellido2.getText().toString();
+        String vCantidad = txfName.getText().toString().trim();
+        int c1 = 0, c2 = 0, cantidad = 0, vcantidad = 0;
+        String cantRes = null;
+        //En caso de que el producto este disponible
         try {
-            ps = cn.prepareStatement(insertar);
-            ps.setString(1, txfID.getText().toString());
-            ps.setString(2, txfName.getText().toString());
-            ps.setString(3, txfApellido1.getText().toString());
-            ps.setString(4, txfApellido2.getText().toString());
-            ps.setString(5, txfFechaN.getText().toString());
-            Resultado = ps.executeUpdate();
-            if (Resultado > 0) {
-                System.out.println("Registro Exitoso");
-                JOptionPane.showMessageDialog(this, "La Venta se agrego correctamente.", "Mensaje", 0, icono);
-                this.dispose();
-            } else {
-                System.out.println("No se pudo Registrar");
+            Connection cn = con.getConection();
+            //Para establecer el modelo al JTable
+
+            //Para ejecutar la consulta
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+            rs = s.executeQuery("SELECT * FROM PRODUCTOS WHERE ID_PRODUCTO = '" + idProducto + "' AND ESTADOPRODU = 'DISPONIBLE'");
+
+            while (rs.next()) {
+                c1++;
             }
-        } catch (Exception e) {
-            System.out.println("Error en Registrar: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "No se pudo agregar La Venta.", "ERROR", JOptionPane.WARNING_MESSAGE);
+            System.out.println("contador prov : " + c1);
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        if (Resultado > 0) {
-            String idC = txfID.getText().toString().trim();
-            String cantidad = txfName.getText().toString().trim();
-            CallableStatement cstm = null;
-            boolean resp = true;
+        //****************************************************************************      
+        try {
+            Connection cn = con.getConection();
+            //Para establecer el modelo al JTable
+
+            //Para ejecutar la consulta
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+            rs = s.executeQuery("SELECT * FROM CLIENTES WHERE ID_CLIENTE = '" + idCliente + "' AND ESTADOCLIENT = 'LISTA BLANCA'");
+
+            while (rs.next()) {
+                c2++;
+            }
+            System.out.println("contador cli : " + c2);
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        //****************************************************************************
+//cantidad restante de producto
+        try {
+            Connection cn = con.getConection();
+
+            //Para ejecutar la consulta
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+            rs = s.executeQuery("SELECT STOCK FROM PRODUCTOS WHERE ID_PRODUCTO = '" + idProducto + "' AND ESTADOPRODU = 'DISPONIBLE' ");
+            //Obteniendo la informacion de las columnas que estan siendo consultadas
+            ResultSetMetaData rsMd = rs.getMetaData();
+            //La cantidad de columnas que tiene la consulta
+            int cantidadColumnas = rsMd.getColumnCount();
+            //Establecer como cabezeras el nombre de las colimnas
+
+            //Creando las filas para el JTable
+            Object[] fila = new Object[cantidadColumnas];
+            while (rs.next()) {
+
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    fila[i] = rs.getObject(i + 1);
+
+                }
+            }
+            cantRes = fila[0] + "";
+            System.out.println("Cantidad: " + cantRes);
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        cantidad = Integer.parseInt(cantRes);
+        vcantidad = Integer.parseInt(vCantidad);
+        if (cantidad >= vcantidad && c2 > 0 && c1 > 0) {
+            //*******************
+            ImageIcon icono = new ImageIcon("src/imagenes/Ok.png");
+            String insertar = " INSERT INTO VENTAS VALUES(?,?,?,?,?) ";
+            String estado = "LISTA BLANCA";
+            int Resultado = 0;
             try {
                 Connection cn = con.getConection();
-                cn.setAutoCommit(false);
-                cstm = cn.prepareCall("{Call REDUCIR(?,?)}");
-                cstm.setString(1, idC);
-                cstm.setString(2, cantidad);
-                resp = cstm.execute();
-                cn.commit();
+                ps = cn.prepareStatement(insertar);
+                ps.setString(1, txfID.getText().toString());
+                ps.setString(2, txfName.getText().toString());
+                ps.setString(3, txfApellido1.getText().toString());
+                ps.setString(4, txfApellido2.getText().toString());
+                ps.setString(5, txfFechaN.getText().toString());
+                Resultado = ps.executeUpdate();
+                if (Resultado > 0) {
+                    System.out.println("Registro Exitoso");
+                    JOptionPane.showMessageDialog(this, "La Venta se agrego correctamente.", "Mensaje", 0, icono);
+                    this.dispose();
+                } else {
+                    System.out.println("No se pudo Registrar");
+                }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Error en Registrar: " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "No se pudo agregar La Venta.", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+            if (Resultado > 0) {
+                String idC = txfID.getText().toString().trim();
+                String sendCant = txfName.getText().toString().trim();
+                CallableStatement cstm = null;
+                boolean resp = true;
+                try {
+                    Connection cn = con.getConection();
+                    cn.setAutoCommit(false);
+                    cstm = cn.prepareCall("{Call REDUCIR(?,?)}");
+                    cstm.setString(1, idC);
+                    cstm.setString(2, sendCant);
+                    resp = cstm.execute();
+                    cn.commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //*******************
+        }else{
+            if (cantidad < vcantidad ) {
+                JOptionPane.showMessageDialog(this, "No tenemos esa camtidad en stock", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+            if (c2 <= 0) {
+                JOptionPane.showMessageDialog(this, "El Cliente no esta disponible", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+            if (c1 <= 0) {
+                JOptionPane.showMessageDialog(this, "El Producto no esta disponible", "ERROR", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnAgregarCMouseClicked
